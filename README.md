@@ -1,70 +1,120 @@
-# Getting Started with Create React App
+2 : Clean up Project - remove unnecessary thing
+clean up index.js
+clean up App.js, App.css
+clean up public/index.html
+remove unnecessary file
+restructure folder to app/ component/
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+3 : CSS setup
 
-## Available Scripts
+#### 3.1 : ติดตั้ง scss
 
-In the project directory, you can run:
+ติดตั้ง sass เพื่อช่วยให้การเขียน CSS แบบ BEM สะดวกมากขึ้น
+รันคำสั่ง npm install sass ลงใน terminal (อย่าลืม check path ว่าอยู่ที่ root project แล้ว : ตำแหน่งที่มี file package.json)
+ตรวจสอบ dependencies ในไฟล์ package.json ว่ามี sass แล้ว
 
-### `npm start`
+#### 3.2 : setup index.scss
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+ไฟล์ index.css : ให้แปลงนามสกุลไฟล์ เป็น index.scss
+ไฟล์ index.js : เปลี่ยนการ import จาก index.css เป็น index.scss
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### 3.3 : CSS Global Reset
 
-### `npm test`
+ไฟล์ index.scss : เขียน css rule เพื่อลบ default padding,margin ต่างๆ รวมถึงวิธีการวัดขนาดของ Box-model
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+_,
+_::after,
+\*::before {
+margin: 0;
+padding: 0;
+box-sizing: inherit;
+}
 
-### `npm run build`
+html {
+font-size: 62.5%; /_equal font-size : 10px_/
+}
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+body {
+box-sizing: border-box;
+}
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### 3.4 : Typography
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+ไฟล์ index.scss : ให้ทำการ import google font
 
-### `npm run eject`
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900&family=Source+Sans+Pro:wght@400;600;700&display=swap');
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+ไฟล์ index.scss : ทำการเพิ่ม font หลักของ application (Nunito) ลงใน tag body
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+body {
+font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#### 3.5 : Color
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+knowledge : scss มีความสามารถในการสร้างตัวแปรไว้ใช้ได้
+ไฟล์ index.scss : สร้างตัวแปรสำหรับเก็บสีหลักๆของ web-application
 
-## Learn More
+$primary: #db4c3f;
+$grey-light: #eaeaea;
+$grey-dark: #808080
+$white: #fff;
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4 : App Layout (or Page layout)
+วาง layout ของหน้าหลัก (ในที่นี้เรามี 1 หน้า)
+ในไฟล์ App.js วาง markup สำหรับทำ layout
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   <div className='todo'>
+        <div className="todo__header">Header</div>
+        <div className="todo__sidebar">SideBar</div>
+        <div classNAme="todo_content">TodoContent</div>
+    </div>
 
-### Code Splitting
+สร้างไฟล์ App.scss
+ไฟล์ App.scss : เขียน css สำหรับจัด layout
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+$header-height: 44px;
+$sidebar-width: 300px;
 
-### Analyzing the Bundle Size
+.todo {
+display: grid;
+grid-template-rows: $header-height calc(100vh - $header-height);
+grid-template-columns: $sidebar-width calc(100vw - $sidebar-width);
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+    &__header {
+        grid-column: 1/3;
+        grid-row: 1/2;
+    }
 
-### Making a Progressive Web App
+    &__sidebar {
+        grid-row: 2/3;
+        grid-column: 1/2;
+        // position: sticky;
+    }
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+    &__content {
+        grid-row: 2/3;
+        grid-column: 2/3;
 
-### Advanced Configuration
+        // other css
+        overflow-y: scroll;
+        padding: 20px 30px;
+        padding-top: 0;
+    }
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+}
 
-### Deployment
+ไฟล์ App.scss : ปรับนามสกุลไฟล์ เป็น App.module.scss
+หากมี error จากการหา variable ไม่เจอ : ให้ import global css เข้ามาใช้งาน
+ไฟล์ App.jsx : implement styles ลงไฟล์ App.jsx
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+import styles from 'App.module.scss';
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<div className={styles.todo}>
+    <div className={styles.todo__header}>Header</div>
+    <div className={styles.todo__sidebar}>SideBar</div>
+    <div classNAme={styles.todo__content}>TodoContent</div>
+</div>;
