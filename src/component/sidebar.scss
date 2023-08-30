@@ -1,0 +1,31 @@
+@import '../index.scss';
+
+.sidebar__todolist {
+    padding: 10px;
+
+    &__general {
+        border-radius: 5px;
+        width: fit-content;
+        display: flex;
+        gap: 10px;
+    }
+
+    &__general:hover {
+        background-color: $grey-light;
+    }
+}
+
+.sidebar__accordion {
+    padding: 10px;
+
+    &__header {
+        margin-top: 10px;
+        display: flex;  
+        gap: 5px;
+        align-items: center;
+    }
+
+    &__header > :first-child {
+        cursor: pointer;
+    }
+}

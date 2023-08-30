@@ -1,4 +1,4 @@
-@import './index.scss';
+@import '../index.scss';
 
 
 .todo {
@@ -16,7 +16,7 @@
     &__sidebar{
         grid-row: 2/-1;
         grid-column: 1/2;
-        background-color: green;
+        // background-color: green;
     }
     &__content{
         grid-row: 2/-1;
