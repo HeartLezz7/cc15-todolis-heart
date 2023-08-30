@@ -3,6 +3,7 @@ import "./Header.scss"
 import Search from "./Search";
 
 function Header() {
+  console.log('test')
     return(
         <header className="header">
         <div className="header__logo">
